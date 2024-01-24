@@ -5,9 +5,13 @@ import java.io.File;
 public class Application {
     public static void main(String[] args) {
         String flag = args[0];
-        FileProcessor fileProcessor = new FileProcessor(new File(args[1]));
+        File file = new File(args[1]);
+        FileProcessor processor = new FileProcessor(file);
         switch (flag) {
-            case "-c" -> System.out.println("Number of bytes: " + fileProcessor.getNumberOfBytes());
+            case "-c" ->
+                    System.out.println("Number of bytes is: " + (file.exists() ? processor.getNumberOfBytes() : 0));
+            case "-l" ->
+                    System.out.println("Number of lines is: " + (file.exists() ? processor.getNumberOfLines() : 0));
             default -> System.out.println("Unknown flag");
         }
     }
