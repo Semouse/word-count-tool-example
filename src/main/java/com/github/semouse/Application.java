@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Application {
+    private static final String DEFAULT_FLAG = " ";
+
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.out.println("Please provide mode or file as command line arguments");
+            process(DEFAULT_FLAG, new InputWordCounter(parseInput()));
         } else {
             parseCommandLineArguments(args);
         }
@@ -17,7 +19,7 @@ public class Application {
             if (args[0].startsWith("-")) {
                 process(args[0], new InputWordCounter(parseInput()));
             } else {
-                process("-d", new FileProcessorWordCounter(new File(args[0])));
+                process(DEFAULT_FLAG, new FileProcessorWordCounter(new File(args[0])));
             }
         } else {
             process(args[0], new FileProcessorWordCounter(new File(args[1])));
