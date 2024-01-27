@@ -5,15 +5,36 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-        String flag = args[0];
-        WordCountable counter = (args.length == 1) ? new InputWordCounter(parseInput()) :
-                new FileProcessorWordCounter(new File(args[1]));
+        if (args.length == 0) {
+            System.out.println("Please provide mode or file as command line arguments");
+        } else {
+            parseCommandLineArguments(args);
+        }
+    }
+
+    private static void parseCommandLineArguments(String[] args) {
+        if (args.length == 1) {
+            if (args[0].startsWith("-")) {
+                process(args[0], new InputWordCounter(parseInput()));
+            } else {
+                process("-d", new FileProcessorWordCounter(new File(args[0])));
+            }
+        } else {
+            process(args[0], new FileProcessorWordCounter(new File(args[1])));
+        }
+    }
+
+    private static void process(String flag, WordCountable counter) {
         switch (flag) {
             case "-c" -> System.out.println("Number of bytes is: " + counter.getNumberOfBytes());
             case "-l" -> System.out.println("Number of lines is: " + counter.getNumberOfLines());
             case "-w" -> System.out.println("Number of words is: " + counter.getNumberOFWords());
             case "-m" -> System.out.println("Number of characters is: " + counter.getNumberOfCharacters());
-            default -> System.out.println("Unknown flag");
+            default -> {
+                System.out.println("Number of bytes is: " + counter.getNumberOfBytes());
+                System.out.println("Number of lines is: " + counter.getNumberOfLines());
+                System.out.println("Number of words is: " + counter.getNumberOFWords());
+            }
         }
     }
 
