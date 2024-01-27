@@ -2,11 +2,11 @@ package com.github.semouse;
 
 import java.io.*;
 
-public class FileProcessor {
+public class FileProcessorWordCounter implements WordCountable {
 
     private final File file;
 
-    public FileProcessor(File file) {
+    public FileProcessorWordCounter(File file) {
         this.file = file;
     }
 
@@ -31,7 +31,7 @@ public class FileProcessor {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (!"".equals(line)) {
+                if (!line.isBlank()) {
                     String[] words = line.split("\\s+");
                     count += words.length;
                 }
